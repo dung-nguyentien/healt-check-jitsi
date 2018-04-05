@@ -1,7 +1,7 @@
 const si = require('systeminformation');
 require('dotenv').config();
 const https = require('https');
-const http = require('https');
+const http = require('http');
 let deviceName = 'enp1s0';
 setInterval(function () {
   si.networkStats(deviceName, function (data) {
