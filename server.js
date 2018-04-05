@@ -5,14 +5,17 @@ const http = require('https');
 let deviceName = 'enp1s0';
 setInterval(function () {
   si.networkStats(deviceName, function (data) {
-    //sendRequestToServer(data.rx_sec);
-    console.log(process.env.KEY);
+    checkServerHealth().then(() => {
+      sendRequestToServer(data.rx_sec, true);
+    }).catch(() => {
+      sendRequestToServer(data.rx_sec, false);
+    });
   });
 }, 2000);
 
-function sendRequestToServer (bandwidth) {
+function sendRequestToServer (bandwidth, serverStatus) {
   let request = https.request({
-    host: 'dev.calling.fun',
+    host: process.env.API_HOST,
     port: '443',
     path: '/api/jitsi-webhook',
     method: 'POST',
@@ -30,8 +33,8 @@ function sendRequestToServer (bandwidth) {
   request.write(JSON.stringify({
     'event_type': 'health-check',
     'current_bandwidth': bandwidth,
-    'server_status': true,
-    'server_sid': '8a26b3f54e2a719b3aa9ece6283728c8',
+    'server_status': serverStatus,
+    'server_sid': process.env.SERVER_SID,
   }));
   request.end();
 }
