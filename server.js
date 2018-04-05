@@ -5,10 +5,11 @@ const http = require('http');
 let deviceName = process.env.DEVICE_NAME;
 setInterval(function () {
   si.networkStats(deviceName, function (data) {
+    let bandwidth = Math.round(data.rx_sec / 1024 / 1024);
     checkServerHealth().then(() => {
-      sendRequestToServer(data.rx_sec, true);
+      sendRequestToServer(bandwidth, true);
     }).catch(() => {
-      sendRequestToServer(data.rx_sec, false);
+      sendRequestToServer(bandwidth, false);
     });
   });
 }, 2000);
@@ -34,7 +35,7 @@ function sendRequestToServer (bandwidth, serverStatus) {
     'event_type': 'health-check',
     'current_bandwidth': bandwidth,
     'server_status': serverStatus,
-    'server_sid': process.env.SERVER_SID,
+    'server_sid': process.env.SERVER_SID
   }));
   request.end();
 }
