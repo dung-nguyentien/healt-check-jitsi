@@ -12,7 +12,7 @@ setInterval(function () {
       sendRequestToServer(bandwidth, false);
     });
   });
-}, 2000);
+}, 1000 * process.env.TIME_RECHECK);
 
 function sendRequestToServer (bandwidth, serverStatus) {
   let request = https.request({
