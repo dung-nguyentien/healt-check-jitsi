@@ -1,0 +1,16 @@
+{
+  "name": "HealthCheck",
+  "version": "1.0.0",
+  "description": "Check bandwidth, server status for jitsi",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "dung.nt@neo-lab.vn",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "systeminformation": "^3.37.9"
+  },
+  "devDependencies": {
+  }
+}
