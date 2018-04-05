@@ -6,6 +6,9 @@ let deviceName = process.env.DEVICE_NAME;
 setInterval(function () {
   si.networkStats(deviceName, function (data) {
     let bandwidth = Math.round(data.rx_sec * 7.62939453125e-06);
+    if (bandwidth <= 0) {
+      return;
+    }
     checkServerHealth().then(() => {
       sendRequestToServer(bandwidth, true);
     }).catch(() => {
