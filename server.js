@@ -2,7 +2,7 @@ const si = require('systeminformation');
 require('dotenv').config();
 const https = require('https');
 const http = require('http');
-let deviceName = 'enp1s0';
+let deviceName = process.env.DEVICE_NAME;
 setInterval(function () {
   si.networkStats(deviceName, function (data) {
     checkServerHealth().then(() => {
